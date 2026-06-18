@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodoLeoX GPT</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="brand">
+
+            <img
+                src="{{ url_for('static', filename='images/codoleo.jpg') }}"
+                class="logo"
+            >
+
+            <div>
+                <h1>CodoLeoX GPT</h1>
+                <span>AI Engineering Assistant</span>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- CHAT -->
+    <main class="chat-box" id="chat-box">
+
+        <div class="msg ai">
+            👋 Hello Developer! I'm <b>CodoLeoX GPT</b>. Ask me anything.
+        </div>
+
+    </main>
+
+    <!-- INPUT -->
+    <footer class="input-container">
+
+        <div class="input-box">
+
+            <textarea
+                    id="user-input"
+                    placeholder="Message CodoLeoX GPT..."
+                    rows="1"></textarea>
+
+            <button onclick="sendMessage()">
+                ➜
+            </button>
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<script>
+
+const chatBox=document.getElementById("chat-box");
+const input=document.getElementById("user-input");
+
+function addMessage(type,text){
+
+    const div=document.createElement("div");
+
+    div.className="msg "+type;
+
+    div.innerHTML=text;
+
+    chatBox.appendChild(div);
+
+    chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+
+async function sendMessage(){
+
+    const msg=input.value.trim();
+
+    if(!msg) return;
+
+    addMessage("user",msg);
+
+    input.value="";
+
+    const loading=document.createElement("div");
+
+    loading.className="msg ai typing";
+
+    loading.innerHTML="● ● ●";
+
+    chatBox.appendChild(loading);
+
+    chatBox.scrollTop=chatBox.scrollHeight;
+
+
+    try{
+
+        const response=await fetch("/api/chat",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                message:msg
+            })
+
+        });
+
+        const data=await response.json();
+
+        loading.remove();
+
+        addMessage("ai",data.response);
+
+    }
+
+    catch(error){
+
+        loading.remove();
+
+        addMessage("ai","Server error.");
+
+    }
+
+}
+
+
+input.addEventListener("keydown",(e)=>{
+
+    if(e.key==="Enter" && !e.shiftKey){
+
+        e.preventDefault();
+
+        sendMessage();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

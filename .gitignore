@@ -1,0 +1,76 @@
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment Variablesd
+.env
+
+# Logs
+logs/
+*.log
+
+# Jupyter Notebook cache
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# SQLite database (if used)
+*.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# ===============================
+# Optional: Ignore notebooks
+# Uncomment if you don't want them on GitHub
+# ===============================
+# *.ipynb
+
+# ===============================
+# Flask cache
+# ===============================
+instance/
+
+# mypy cache
+.mypy_cache/
+
+# Ruff cache
+.ruff_cache/
+*.ipynb
+.ipynb_checkpoints/
+.env
+logs/
+__pycache__/
+.env
+logs/
+__pycache__/
+.ipynb_checkpoints/
+*.ipynb
